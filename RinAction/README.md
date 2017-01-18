@@ -31,3 +31,10 @@ mymatrix2
 
 **数组**：和矩阵类似，但是允许维度大于2，公式定义如下：
 ![数组定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数组定义.png)
+```R
+dim1<-c("A1","A2")
+dim2<-c("B1","B2","B3")
+dim3<-c("C1","C2","C3","C4")
+z<-array(1:24, c(2,3,4), dimnames = list(dim1,dim2,dim3))
+z
+```
