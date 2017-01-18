@@ -1,5 +1,5 @@
 # RlangLearn
-Here is some notes taken when I m learning R Language. 
+Here r some notes taken when I m learning R Language. 
 
 ## 更新记录 update log
 2017-1-18
