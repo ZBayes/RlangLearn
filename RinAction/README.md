@@ -1,4 +1,8 @@
 # R语言实战阅读笔记
+根据下面书本学习的笔记：
+[1]Robert, I, Kabacoff. [R语言实战](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R语言实战.pdf)[M]. 北京:中国工信出版集团, 人民邮电出版社, 2016.
+[2]刘重杰. [R数据的导入与导出](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf)[EB/OL]. https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf.
+
 ## 2 创建数据集
 ### 2.2 数据结构
 一般而言，数据的存储结构有下面几种形式：
@@ -30,7 +34,8 @@ mymatrix2
 ```
 
 **数组**：和矩阵类似，但是允许维度大于2，公式定义如下：
-![数组定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数组定义.png)
+![数组定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数组定义.png)  
+R语言中数组的是从1开始算的，和matlab相同，和大部分高级语言不同。
 ```R
 dim1<-c("A1","A2")
 dim2<-c("B1","B2","B3")
@@ -131,4 +136,21 @@ mylist
 ```
 
 ### 2.3 数据输入
-这块内容个人打算随用随查，所以暂时不打算详细学，另外编者提供了一个文档，有PDF版本()[]
+这块内容个人打算随用随查，所以暂时不打算详细学，另外编者提供了一个文档，有PDF版本[R数据的导入与导出](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf)。
+
+### 2.4 数据集的标注
+通俗的说就是个数据集或者属性添加备注，如age里面添加内容是ages at hospitalization(in years)。然而R对这个功能的支持十分有限。
+**变量标签**：用简单粗暴的数组来表示。
+```R
+names(patientdata)[2]<-"Age at hospitalization(in years)"
+```
+变量名变得这么长，并没有什么用。
+**值标签**：创建值标签
+```R
+patientdata&gender<-factor(patientdata$gender,levels = c(1,2),labels = c("male","female"))
+```
+
+### 2.5 处理数据对象的实用函数
+两张截屏搞定：
+![数据处理对象函数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数1.png)
+![数据处理对象函数2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数2.png)

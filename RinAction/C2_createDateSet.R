@@ -79,3 +79,7 @@ j<-matrix(1:10,nrow = 5)
 k<-c("one","two","three")
 mylist<-list(title=g,ages=h,j,k)
 mylist
+
+# 数据集标注
+names(patientdata)[2]<-"Age at hospitalization(in years)"
+patientdata&gender<-factor(patientdata$gender,levels = c(1,2),labels = c("male","female"))
