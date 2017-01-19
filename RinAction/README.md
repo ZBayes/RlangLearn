@@ -174,14 +174,16 @@ dev.off()
 缩进为画图的出程序内绘图，绘图完成后会存入"myGraph.pdf"，plot画出wt和pmg的二维散点图，然后绘出其回归线，title为图片添加标题。  
 除了pdf之外，还有win.metafile, png(), jpeg(), bmp(), tiff(), xfig(), postscript()图片保存格式。
 
-为了更好描述内容图形的使用，下面是一个例子。
+为了更好描述内容图形的使用，下面是一个例子。是一个病人对两种药物的五个剂量水平响应的统计，用图像表示。源数据的统计表如下：
+![病人对两种药物的五个剂量水平响应统计表](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/病人对两种药物的五个剂量水平响应统计表.png)  
+源代码如下：
 ```R
 dose<-c(20,30,40,45,60)
 drugA<-c(16,20,27,40,60)
 drugB<-c(15,18,25,31,40)
 plot(dose,drugA,type = "b")
 ```
-画出来的图就是这样的
+画出来的图就是这样的  
 ![药物A和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应1.png)  
 于是将图像进行一定的修改。
 ```R
@@ -216,3 +218,72 @@ plot(dose,drugA,type = "b",lty=2,pch=17)
 最后，还有控制图形本身和边界尺寸的参数
 ![用于空值图像和边界尺寸的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)
 
+下面来更加完整的例子，还是上面的剂量的例子：
+```R
+dose<-c(20,30,40,45,60)
+drugA<-c(16,20,27,40,60)
+drugB<-c(15,18,25,31,40)
+
+opar<-par(no.readonly = TRUE)
+par(pin=c(2,3))
+par(lwd=2,cex=1.5)
+par(cex.axis=.75,font.axis=3)
+plot(dose,drugA,type = "b",pch=19,lty=2,col="red")
+plot(dose,drugB,type = "b",pch=23,lty=6,col="blue",bg="green")
+par(opar)
+```
+![药物A剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A剂量和响应1.png)
+![药物B剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物B剂量和响应1.png)
+
+然后是添加文本，自定义坐标轴和图例。
+```R
+plot(dose, drugA, type="b",  
+  col="red", lty=2, pch=2, lwd=2,
+  main="Clinical Trials for Drug A", 
+  sub="This is hypothetical data", 
+  xlab="Dosage", ylab="Drug Response",
+  xlim=c(0, 60), ylim=c(0, 70))
+```
+![药物A和响应——添加标题副标题和坐标轴]{https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——添加标题副标题和坐标轴.png}
+
+关于标题，有专门的函数可以定义可以设置。  
+![标题定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——标题定义.png)  
+同样的，坐标轴也有。
+![坐标轴定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——坐标轴定义.png)
+其选项的设置如下：
+![坐标轴选项1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——坐标轴选项1.png)
+![坐标轴选项2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——坐标轴选项2.png)  
+
+来个例子
+```R
+x<-c(1:10)
+y<-x
+z<-10/x
+opar<-par(no.readonly = TRUE)
+
+par(mar=c(5,4,4,8)+0.1)
+plot(x,y,type = "b",
+     pch=21,col="red",
+     yaxt="n",lty=3,ann=FALSE)
+lines(x,z,type = "b",pch=22,col="blue",lty=2)
+
+axis(2,at=x,labels = x,col.axis="red",las=2)
+
+axis(4,at=z,labels=round(z,digits = 2),
+     col.axis="blue",las=2,cex.axis=0.7,tck=-0.01)
+
+mtext("y=1/x", side=4, line=3, cex.lab=1, las=2, col="blue")
+title("An Example of Creative Axes",
+      xlab="X values",
+      ylab="Y=X")
+par(opar)
+```
+![坐标轴选项示例](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴选项示例.png)
+
+添加参考线使用的命令：
+![添加参考线](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/添加参考线.png)
+另外，还能为abline添加额外的图形参数如线条类型，颜色和宽度。
+```R
+abline(h=c(1,5,7))
+abline(h=seq(1,10,2),lty=2,col="blue")
+```
