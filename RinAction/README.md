@@ -439,3 +439,276 @@ par(opar)
 ![图像合并4](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图像合并4.png)
 
 图形的处理根据课本暂时先到这，后续还会根据需求进行拓展，只要多练习就能够有进一步的提升，有更加炫酷的（实际就是更加合适的）效果。这些图个人都非常喜欢，可视化的美观性是我想学R的一个重要理由。
+
+## 4 基本数据管理
+**C4_basicDataManagement.R**  
+本章主要讲解基本的数据管理和预处理技巧。
+### 4.1 案例
+书中研究的是性别等因素对领导行为的影响，数据表如下：  
+![性别领导行为案例数据](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/性别领导行为案例数据.png)  
+对陈述的评分主要是下面的标准：  
+![性别领导行为案例数据_评价标准](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/性别领导行为案例数据_评价标准.png)  
+执行的数据初始化如下：
+```R
+manager <- c(1,2,3,4,5)
+date <- c("10/24/08","10/28/08","10/1/08","10/12/08","5/1/09")
+gender <- c("M","F","F","M","F")
+age <- c(32,45,25,39,99)
+q1 <- c(5,3,3,3,2)
+q2 <- c(4,5,5,3,2)
+q3 <- c(5,2,5,4,1)
+q4 <- c(5,5,5,NA,2)
+q5 <- c(5,5,2,NA,1)
+leadership <- data.frame(manager,date,gender,age,q1,q2,q3,q4,q5, 
+                         stringsAsFactors=FALSE)
+```
+
+### 4.2 创建新变量
+创建新变量在前面的实验已经非常熟悉了，不再赘述，直接看看总结的常用算术运算符。
+![算术运算符](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/算术运算符.png)  
+关于创建新变量，作者给出了三种方式，如下面所示：
+```R
+mydata<-data.frame(x1 = c(2, 2, 6, 4),
+                   x2 = c(3, 4, 2, 8))
+
+mydata$sumx <- mydata$x1 + mydata$x2
+mydata$meanx <- (mydata$x1 + mydata$x2)/2
+
+attach(mydata)
+mydata$sumx <- x1 + x2
+mydata$meanx <- (x1 + x2)/2
+detach(mydata)
+
+mydata <- transform(mydata,
+                    sumx = x1 + x2,
+                    meanx = (x1 + x2)/2)
+```
+上述有三种方式王mydata里面添加两列，作者比较钟爱第三种，比较清晰简洁。
+
+### 4.3 变量重编码
+重编码实质还是赋值，只是赋值的内容比较不同，首先介绍简单地逻辑运算符。
+![逻辑运算符](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/逻辑运算符.png)  
+其实变量重编码的主要目的是处理数据中不正确的数据，例如年龄小于0的，大于99的，小数等。可以有下面的处理。  
+```R
+leadership$age[leadership$age==99]<-NA
+```
+另外，为了更好地处理年龄，决定将年龄分段
+```R
+leadership$agecat[leadership$age > 75] <- "Elder"
+leadership$agecat[leadership$age >= 55 &
+                    leadership$age <= 75] <- "Middle Aged"
+leadership$agecat[leadership$age < 55] <- "Young"
+
+leadership <- within(leadership,{
+  agecat <- NA
+  agecat[age > 75] <- "Elder"
+  agecat[age >= 55 & age <= 75] <- "Middle Aged"
+  agecat[age < 55] <- "Young" })
+```
+
+### 4.4 变量重命名
+在一些情况下，数据的变量名并非所需，或者不准确，此时可以对变量进行重命名。
+```R
+names(leadership)[2] <- "testDate"
+```
+当然，也能批量修改。
+```R
+names(leadership)[6:10] <- c("item1","item2","item3","item4","item5")
+```
+在plyr包中有一个rename函数，同样可以用于重命名。
+```R
+library(plyr)
+leadership <- rename(leadership,
+                     c(manager="managerID", Date="testDate"))
+```
+
+### 4.5 缺失值
+is.na()能判断是否为缺失值。  
+```R
+is.na(leadership[, 6:10])
+```
+
+na.omit()用于删除不完整的条目  
+```R
+leadership
+newdata <- na.omit(leadership)
+newdata
+```
+
+### 4.6 日期值
+一个比较头疼的情况，日期的记录各种各样，还有数据类型等，为此，R提供了一些帮助。下面是日期格式表：  
+![日期格式](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/日期格式.png)  
+默认日期格式为下面形式：  
+```R
+mydates <- as.Date(c("2007-06-22", "2004-02-13"))
+```
+
+如果需要修改的话：  
+```R
+strDates <- c("01/05/1965", "08/16/1975")
+dates <- as.Date(strDates, "%m/%d/%Y")
+```
+
+系统时间可以这么表示  
+```R
+Sys.Date()
+date()
+```
+
+如果需要再进一步改格式，  
+```R
+today <- Sys.Date()
+format(today, format="%B %d %Y")
+format(today, format="%A")
+```
+
+对程序比较了解的都知道，绝大部分系统和语言的时间记录是根据1970年1月1日来进行相对位置存储的。R语言也是。所以就能对日期进行计算。  
+```R
+startdate <- as.Date("2004-02-13")
+enddate <- as.Date("2011-01-22")
+days <- enddate - startdate
+days
+```
+
+另外，还有different能进行日期计算。  
+```R
+today <- Sys.Date()
+dob <- as.Date("1956-10-12")
+difftime(today, dob, units="weeks")
+```
+
+日期编程字符型能够进行字符串计算，所以还是要弄懂的~  
+```R
+strDates <- as.character(dates)
+```
+
+日期计算似乎还有很多，例如工作日等，以后根据实际需求在学习吧。  
+
+### 4.7 数据转换
+根据实际需求对数据类型进行转化。
+![转换类型函数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/转换类型函数.png)
+```R
+a <- c(1,2,3)
+a
+is.numeric(a)
+is.vector(a)
+a <- as.character(a)
+a
+is.numeric(a)
+is.vector(a)
+is.character(a)
+```
+
+### 4.8 数据排序
+超喜欢这个，不用自己编程实现了，直接搞定。
+```R
+newdata <- leadership[order(leadership$age),]
+
+attach(leadership)
+newdata <- leadership[order(gender, age),]
+detach(leadership)
+
+attach(leadership)
+newdata <-leadership[order(gender, -age),]
+detach(leadership)
+```
+
+### 4.10 数据合并
+也叫作数据集成，R似乎是对数据合并下了不少功夫，看来是踩过不少坑。  
+```R
+total <- merge(dataframeA, dataframeB, by="ID")
+```
+
+表示dataframeA和dataframeB根据ID进行合并。当然根据实际情况，可能会根据两个属性甚至多个属性进行合并，如：  
+```R
+total <- merge(dataframeA, dataframeB, by=c("ID","Country"))
+```
+
+另外，还有一个更加简单粗暴的方法，但是要求行相同。  
+```R
+total <- cbind(A, B)
+```
+
+上面说的是横向合并，即添加列，类似于关系代数中的连接。而R语言还支持横向合并，类似于集合中的并。  
+```R
+total <- rbind(dataframeA, dataframeB)
+```
+
+为了保证数据完整性和一致性，合并还会对数据进行一些其他处理。
+
+- 删除dataframeA中的多余变量；
+- 在dataframeB中创建追加的变量并将其值设为NA（缺失）
+
+### 4.10 数据集取子集
+顾名思义，类似SQL中的select。  
+```R
+newdata <- leadership[, c(5:9)]
+```
+
+可以根据属性号选择，当然，也能根据属性名。   
+```R
+myvars <- c("q1", "q2", "q3", "q4", "q5")
+newdata <-leadership[myvars]
+```
+
+另外还有一种方法，字符串拼接得到字符串的方法。  
+```R
+myvars <- paste("q", 1:5, sep="")
+newdata <- leadership[myvars]
+```
+
+再者，还有删除变量的方法。
+```R
+myvars <- names(leadership) %in% c("q3", "q4") 
+leadership[!myvars]
+```
+
+其讲解比较长，有必要粘贴下来...  
+![数据删除讲解](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据删除讲解.png)  
+也有简单的，下面这种表示删除第8列和第9列
+```R
+newdata <- leadership[c(-8,-9)]
+```
+
+选入观测其实是一个很复杂的过程。
+```R
+newdata <- leadership[1:3,]
+newdata <- leadership[leadership$gender=="M" &
+                        leadership$age > 30,]
+
+attach(leadership)
+newdata <- leadership[gender=='M' & age > 30,]
+detach(leadership)
+```
+
+目标是选取30岁以上男性进行观测。  
+
+再给一个例子，研究范围限定在2009年1月1日到2009年12月31日之间，对期间的数据进行观测。  
+```R
+startdate <- as.Date("2009-01-01")
+enddate <- as.Date("2009-10-31")
+newdata <- leadership[which(leadership$date >= startdate &
+                              leadership$date <= enddate),]
+```
+
+难的懂了，下面这个函数subset能帮助我们更简单的执行。
+```R
+newdata <- subset(leadership, age >= 35 | age < 24,
+                  select=c(q1, q2, q3, q4))
+newdata <- subset(leadership, gender=="M" & age > 25,
+                  select=gender:q4)
+```
+含义表示如下：
+![subset解释](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/subset解释.png)
+
+### 4.11 SQL操作
+用SQL应该会更方便吧哈哈。需要用到包sqldf
+```R
+library(sqldf)
+newdf <- sqldf("select * from mtcars where carb=1 order by mpg",
+               row.names=TRUE)
+newdf
+sqldf("select avg(mpg) as avg_mpg, avg(disp) as avg_disp, gear
+from mtcars where cyl in (4, 6) group by gear")
+```
+不展开，睡觉去，有需求再来展开学一波。
