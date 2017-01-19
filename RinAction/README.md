@@ -1,7 +1,7 @@
 # R语言实战阅读笔记
-阅读这本书然后进行笔记，方便起见参考文献写最前面。
+阅读这本书然后进行笔记，方便起见参考文献写最前面。  
 [1] Robert, I, Kabacoff. [R语言实战](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R语言实战.pdf)[M]. 北京:中国工信出版集团, 人民邮电出版社, 2016.  
-[2] 刘重杰. [R数据的导入与导出](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf)[EB/OL]. https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf.
+[2] 刘重杰. [R数据的导入与导出](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf)[EB/OL]. https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf.  
 
 ## 2 创建数据集
 **C2_createDateSet.R**
@@ -156,3 +156,63 @@ patientdata&gender<-factor(patientdata$gender,levels = c(1,2),labels = c("male",
 两张截屏搞定：
 ![数据处理对象函数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数1.png)
 ![数据处理对象函数2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数2.png)
+
+## 3 图形初阶
+本章主要讲解了图形的创建、自定义符号、线条和坐标轴、标注文本和标题，控制图形难度，组合多个图形。
+
+### 3.1 使用图形
+首先给出这个例子：
+```R
+pdf("myGraph.pdf")
+  attach(atcars)
+  plot(wt,mpg)
+  abline(lm(mpg~wt))
+  title("Regression of MPG and WT")
+  detach(atcars)
+dev.off()
+```
+缩进为画图的出程序内绘图，绘图完成后会存入"myGraph.pdf"，plot画出wt和pmg的二维散点图，然后绘出其回归线，title为图片添加标题。  
+除了pdf之外，还有win.metafile, png(), jpeg(), bmp(), tiff(), xfig(), postscript()图片保存格式。
+
+为了更好描述内容图形的使用，下面是一个例子。
+```R
+dose<-c(20,30,40,45,60)
+drugA<-c(16,20,27,40,60)
+drugB<-c(15,18,25,31,40)
+plot(dose,drugA,type = "b")
+```
+画出来的图就是这样的
+![药物A和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应1.png)  
+于是将图像进行一定的修改。
+```R
+opar<-par(no.readonly = TRUE)
+par(lty=2,pch=17)
+plot(dose,drugA,type = "b")
+par(opar)
+```
+par中可以修改图像的性质，其中的lty表示线条形式，为2时表示虚线，pch表示点的形状，17为实心三角形，par中可以一次设置多个参数，也可以分几次来实现。
+```R
+par(lty=2)
+par(pch=17)
+```
+另外临时的，可以使用下面的联合的方式来直接实现对图的修改。
+```R
+plot(dose,drugA,type = "b",lty=2,pch=17)
+```
+得到的图像结果是
+![药物A和响应2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应2.png)  
+下面是一张关于符号与线条的参数表，通过参数表能够更好的查找需要变化的项及其取值。
+![制定符号和线条类型的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/制定符号和线条类型的参数.png)
+![参数pch可指定的绘图符号](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/参数pch可指定的绘图符号.png)
+![参数lty可指定的线条类型](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/参数lty可指定的线条类型.png)
+
+关于颜色，同样由类似骚包的操作。直接上图，不多说了。
+![用于制定颜色的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定颜色的参数.png)
+
+同样的，还有文本属性
+![用于制定文本大小的参数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定文本大小的参数1.png)
+![用于制定字体族字号和字样的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)
+
+最后，还有控制图形本身和边界尺寸的参数
+![用于空值图像和边界尺寸的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)
+
