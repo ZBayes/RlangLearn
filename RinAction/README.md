@@ -8,7 +8,7 @@
 数据的创建、导入和整理等。
 ### 2.2 数据结构
 一般而言，数据的存储结构有下面几种形式：
-![数据存储结构](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据存储结构.png)
+![数据存储结构](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据存储结构.png)  
 
 **因子**：用于存储数值型，字符型，逻辑型数据的一位数组。
 ```R
@@ -21,7 +21,7 @@ a[2:4]
 ```
 
 **矩阵**: 二维数组，每个元素有用相同的数据类型。公式定义十分复杂，如下图所示：
-![矩阵定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/矩阵定义.png)
+![矩阵定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/矩阵定义.png)  
 ```R
 y<-matrix(1:20,nrow = 5,ncol = 4)
 y
@@ -47,7 +47,7 @@ z
 ```
 
 **数据框**：不同列可以有不同模式的数据，相比矩阵而言更加一般化。
-![数据框定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据框定义.png)
+![数据框定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据框定义.png)  
 ```R
 patientID<-c(1,2,3,4)
 age<-c(25,34,28,52)
@@ -154,8 +154,8 @@ patientdata&gender<-factor(patientdata$gender,levels = c(1,2),labels = c("male",
 
 ### 2.5 处理数据对象的实用函数
 两张截屏搞定：
-![数据处理对象函数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数1.png)
-![数据处理对象函数2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数2.png)
+![数据处理对象函数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数1.png)  
+![数据处理对象函数2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数2.png)  
 
 ## 3 图形初阶
 本章主要讲解了图形的创建、自定义符号、线条和坐标轴、标注文本和标题，控制图形难度，组合多个图形。
@@ -201,22 +201,22 @@ par(pch=17)
 ```R
 plot(dose,drugA,type = "b",lty=2,pch=17)
 ```
-得到的图像结果是
+得到的图像结果是  
 ![药物A和响应2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应2.png)  
 下面是一张关于符号与线条的参数表，通过参数表能够更好的查找需要变化的项及其取值。
-![制定符号和线条类型的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/制定符号和线条类型的参数.png)
-![参数pch可指定的绘图符号](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/参数pch可指定的绘图符号.png)
-![参数lty可指定的线条类型](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/参数lty可指定的线条类型.png)
+![制定符号和线条类型的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/制定符号和线条类型的参数.png)  
+![参数pch可指定的绘图符号](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/参数pch可指定的绘图符号.png)  
+![参数lty可指定的线条类型](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/参数lty可指定的线条类型.png)  
 
 关于颜色，同样由类似骚包的操作。直接上图，不多说了。
-![用于制定颜色的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定颜色的参数.png)
+![用于指定颜色的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于指定颜色的参数.png)  
 
 同样的，还有文本属性
-![用于制定文本大小的参数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定文本大小的参数1.png)
-![用于制定字体族字号和字样的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)
+![用于制定文本大小的参数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定文本大小的参数1.png)  
+![用于制定字体族字号和字样的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)  
 
 最后，还有控制图形本身和边界尺寸的参数
-![用于空值图像和边界尺寸的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)
+![用于空值图像和边界尺寸的参数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/用于制定字体族字号和字样的参数.png)  
 
 下面来更加完整的例子，还是上面的剂量的例子：
 ```R
@@ -232,8 +232,8 @@ plot(dose,drugA,type = "b",pch=19,lty=2,col="red")
 plot(dose,drugB,type = "b",pch=23,lty=6,col="blue",bg="green")
 par(opar)
 ```
-![药物A剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A剂量和响应1.png)
-![药物B剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物B剂量和响应1.png)
+![药物A剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A剂量和响应1.png)  
+![药物B剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物B剂量和响应1.png)  
 
 然后是添加文本，自定义坐标轴和图例。
 ```R
@@ -244,15 +244,15 @@ plot(dose, drugA, type="b",
   xlab="Dosage", ylab="Drug Response",
   xlim=c(0, 60), ylim=c(0, 70))
 ```
-![药物A和响应——添加标题副标题和坐标轴]{https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——添加标题副标题和坐标轴.png}
+![药物A和响应——添加标题副标题和坐标轴](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——添加标题副标题和坐标轴.png)  
 
 关于标题，有专门的函数可以定义可以设置。  
-![标题定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——标题定义.png)  
-同样的，坐标轴也有。
-![坐标轴定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——坐标轴定义.png)
-其选项的设置如下：
-![坐标轴选项1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——坐标轴选项1.png)
-![坐标轴选项2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应——坐标轴选项2.png)  
+![标题定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/标题定义.png)  
+同样的，坐标轴也有。  
+![坐标轴定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴定义.png)  
+其选项的设置如下：  
+![坐标轴选项1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴选项1.png)  
+![坐标轴选项2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴选项2.png)  
 
 来个例子
 ```R
@@ -278,12 +278,154 @@ title("An Example of Creative Axes",
       ylab="Y=X")
 par(opar)
 ```
-![坐标轴选项示例](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴选项示例.png)
+![坐标轴选项示例](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴选项示例.png)  
 
-添加参考线使用的命令：
-![添加参考线](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/添加参考线.png)
+添加参考线使用的命令：  
+![添加参考线](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/添加参考线.png)  
 另外，还能为abline添加额外的图形参数如线条类型，颜色和宽度。
 ```R
 abline(h=c(1,5,7))
 abline(h=seq(1,10,2),lty=2,col="blue")
 ```
+
+图例用于表示图像中线条或者是柱表示的内容，R语言也提供了这方面的支持。  
+![图例选项](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图例选项.png)  
+给一个例子，用于对比两种药物的效果。
+```R
+dose<-c(20,30,40,45,60)
+drugA<-c(16,20,27,40,60)
+drugB<-c(15,18,25,31,40)
+
+opar<-par(no.readonly = TRUE)
+
+par(lwd=2,cex=1.5,font.lab=2)
+plot(dose, drugA, type="b",
+     pch=15, lty=1, col="red", ylim=c(0, 60),
+     main="Drug A vs. Drug B",
+     xlab="Drug Dosage", ylab="Drug Response")
+lines(dose, drugB, type="b",
+      pch=17, lty=2, col="blue")
+abline(h=c(30), lwd=1.5, lty=2, col="gray")
+library(Hmisc)
+minor.tick(nx=3, ny=3, tick.ratio=0.5)
+legend("topleft", inset=.05, title="Drug Type", c("A","B"),
+       lty=c(1, 2), pch=c(15, 17), col=c("red", "blue"))
+par(opar)
+```
+需要注明的是，里面需要一个包，"Hmisc"，包的安装用下面命令安装和配置，在本代码中，此包中的函数用于绘制次要刻度线。
+```R
+install.packages("Hmisc")
+library(Hmisc)
+```
+最终运行后的结果是:
+![坐标轴演示实验](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/坐标轴演示实验.png)
+
+文本标注在R中同样支持，其格式为：
+![文本标注定义](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/文本标注定义.png)
+涉及的选项内容为：
+![text和mtext选项](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/text和mtext选项.png)
+在文本标注中，作者给出了这个例子：
+```R
+attach(mtcars)
+plot(wt, mpg,
+     main="Mileage vs. Car Weight",
+     xlab="Weight", ylab="Mileage",
+     pch=18, col="blue")
+text(wt, mpg,
+     row.names(mtcars),
+     cex=0.6, pos=4, col="red")
+detach(mtcars)
+```
+运行结果如下：
+
+![添加标注的散点图](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/text和mtext选项.png)
+
+在一些时候，还需要在图中标注函数等数学内容，数字标注的内容比较多，可以通过下面命令详细了解
+```R
+demo(plotmath)
+```
+为了方便起见，我直接上运行结果，首先是自动执行的代码和返回内容，由于内容不较长，我放在了demo(plotmath)_return.txt文件里面，方便查阅。  
+
+重要的是在plot中的返回内容如下：
+![demoplot1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot1.png)
+![demoplot2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot2.png)
+![demoplot3](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot3.png)
+![demoplot4](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot4.png)
+![demoplot5](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot5.png)
+
+最后是图像组合，在matlab中有subplot进行图像组合，类似的，在R中用par()和layout()进行实现。直接上例子，更加快，下面的这个是用par的例子。
+```R
+attach(mtcars)
+opar <- par(no.readonly=TRUE)
+par(mfrow=c(2,2))
+plot(wt,mpg, main="Scatterplot of wt vs. mpg")
+plot(wt,disp, main="Scatterplot of wt vs. disp")
+hist(wt, main="Histogram of wt")
+boxplot(wt, main="Boxplot of wt")
+par(opar)
+detach(mtcars)
+```
+其中起作用的就是第三行代码：
+```R
+par(mfrow=c(2,2))
+```
+表示能把后面画的四张图转化为2x2的矩阵图，效果如下：  
+
+![图像合并1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图像合并1.png)
+
+另外是layout的例子：
+```R
+attach(mtcars)
+layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+hist(wt)
+hist(mpg)
+hist(disp)
+detach(mtcars)
+```
+显然起作用的是第二行代码。  
+```R
+layout(matrix(c(1,1,2,3), 2, 2, byrow = TRUE))
+```
+layout里面是一个矩阵，  
+```R
+matrix(c(1,1,2,3), 2, 2, byrow = TRUE)
+```
+具体矩阵长啥样就不多说了，第一行是两个1，第二行是2,3。说明，第一张图占用矩阵的第一行，下面两个矩阵分别占用第二行的两个小部分。
+
+![图像合并2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图像合并2.png)
+
+layout还有一个强大之处就是按照特定比例分配大小。
+```R
+attach(mtcars)
+layout(matrix(c(1, 1, 2, 3), 2, 2, byrow = TRUE),
+       widths=c(3, 1), heights=c(1, 2))
+hist(wt)
+hist(mpg)
+hist(disp)
+detach(mtcars)
+```
+widths设置的是每列的宽度比，heights设置的是每行的宽度比。
+
+![图像合并3](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图像合并3.png)
+
+说起来你可能不信，还有更加先进的图形布局控制，还是先看看例子。图形精准控制
+```R
+opar <- par(no.readonly=TRUE)
+
+par(fig=c(0, 0.8, 0, 0.8))
+plot(mtcars$mpg, mtcars$wt,
+     xlab="Miles Per Gallon",
+     ylab="Car Weight")
+
+par(fig=c(0, 0.8, 0.55, 1), new=TRUE)
+boxplot(mtcars$mpg, horizontal=TRUE, axes=FALSE)
+
+par(fig=c(0.65, 1, 0, 0.8), new=TRUE)
+boxplot(mtcars$wt, axes=FALSE)
+
+mtext("Enhanced Scatterplot", side=3, outer=TRUE, line=-3)
+par(opar)
+```
+显然，起作用的是par中的fig参数，fig参数设置的是该图（无论是条形图，折线图等，都可以认为是矩形），是一个1行4列的向量，前两个数表示横向跨越的范围（横坐标跨越范围，原点坐标在左下角），以上方箱形图为例，其横坐标跨越的范围是0.65到1，类似的，其纵坐标的跨越范围是0到0.8。实现效果如下：
+
+![图像合并4](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图像合并4.png)
