@@ -1,4 +1,6 @@
 # R语言实战阅读笔记
+[TOC]
+
 阅读这本书然后进行笔记，方便起见参考文献写最前面。  
 [1] Robert, I, Kabacoff. [R语言实战](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R语言实战.pdf)[M]. 北京:中国工信出版集团, 人民邮电出版社, 2016.  
 [2] 刘重杰. [R数据的导入与导出](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf)[EB/OL]. https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf.  
@@ -158,7 +160,8 @@ patientdata&gender<-factor(patientdata$gender,levels = c(1,2),labels = c("male",
 ![数据处理对象函数2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据处理对象函数2.png)  
 
 ## 3 图形初阶
-本章主要讲解了图形的创建、自定义符号、线条和坐标轴、标注文本和标题，控制图形难度，组合多个图形。
+**C3_basicGraphics.R**  
+图形创建与处理基础。
 
 ### 3.1 使用图形
 首先给出这个例子：
@@ -174,6 +177,7 @@ dev.off()
 缩进为画图的出程序内绘图，绘图完成后会存入"myGraph.pdf"，plot画出wt和pmg的二维散点图，然后绘出其回归线，title为图片添加标题。  
 除了pdf之外，还有win.metafile, png(), jpeg(), bmp(), tiff(), xfig(), postscript()图片保存格式。
 
+### 3.2 简单例子
 为了更好描述内容图形的使用，下面是一个例子。是一个病人对两种药物的五个剂量水平响应的统计，用图像表示。源数据的统计表如下：
 ![病人对两种药物的五个剂量水平响应统计表](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/病人对两种药物的五个剂量水平响应统计表.png)  
 源代码如下：
@@ -185,7 +189,9 @@ plot(dose,drugA,type = "b")
 ```
 画出来的图就是这样的  
 ![药物A和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A和响应1.png)  
-于是将图像进行一定的修改。
+
+### 3.3 图形参数
+下面是一系列能够修改图像的参数。
 ```R
 opar<-par(no.readonly = TRUE)
 par(lty=2,pch=17)
@@ -235,7 +241,8 @@ par(opar)
 ![药物A剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物A剂量和响应1.png)  
 ![药物B剂量和响应1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/药物B剂量和响应1.png)  
 
-然后是添加文本，自定义坐标轴和图例。
+### 3.4 添加文本和图例
+不废话，还是先上例子。
 ```R
 plot(dose, drugA, type="b",  
   col="red", lty=2, pch=2, lwd=2,
@@ -353,6 +360,7 @@ demo(plotmath)
 ![demoplot4](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot4.png)
 ![demoplot5](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/demoplot5.png)
 
+### 3.5 图形组合
 最后是图像组合，在matlab中有subplot进行图像组合，类似的，在R中用par()和layout()进行实现。直接上例子，更加快，下面的这个是用par的例子。
 ```R
 attach(mtcars)
@@ -429,3 +437,5 @@ par(opar)
 显然，起作用的是par中的fig参数，fig参数设置的是该图（无论是条形图，折线图等，都可以认为是矩形），是一个1行4列的向量，前两个数表示横向跨越的范围（横坐标跨越范围，原点坐标在左下角），以上方箱形图为例，其横坐标跨越的范围是0.65到1，类似的，其纵坐标的跨越范围是0到0.8。实现效果如下：
 
 ![图像合并4](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/图像合并4.png)
+
+图形的处理根据课本暂时先到这，后续还会根据需求进行拓展，只要多练习就能够有进一步的提升，有更加炫酷的（实际就是更加合适的）效果。这些图个人都非常喜欢，可视化的美观性是我想学R的一个重要理由。

@@ -15,4 +15,5 @@ Here r some notes taken when I m learning R Language.
 
 - 新增：R语言实战笔记RinAction，图形初阶
 - 新增：R语言实战笔记RinAction，源代码
-
+参考文献：  
+[1] Robert, I, Kabacoff. [R语言实战](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R语言实战.pdf)[M]. 北京:中国工信出版集团, 人民邮电出版社, 2016.  
