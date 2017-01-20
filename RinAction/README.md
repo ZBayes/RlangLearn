@@ -712,3 +712,117 @@ sqldf("select avg(mpg) as avg_mpg, avg(disp) as avg_disp, gear
 from mtcars where cyl in (4, 6) group by gear")
 ```
 不展开，睡觉去，有需求再来展开学一波。
+
+## 5 高级数据管理
+**C5_advancedDataManagement.R**
+快速get各种数学、统计、字符串处理函数，学会编辑函数实现特定功能，并提供数据整合的一些特殊方法。
+
+### 5.1 一个数据处理的难题
+本章只提出一个问题，首先是给出学生数据表。
+![学生成绩数据](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/学生成绩数据.png)
+
+案例的数据建立代码如下：
+```R
+Student <- c("John Davis","Angela Williams","Bullwinkle Moose",
+             "David Jones","Janice Markhammer",
+             "Cheryl Cushing","Reuven Ytzrhak",
+             "Greg Knox","Joel England","Mary Rayburn")
+math <- c(502, 600, 412, 358, 495, 512, 410, 625, 573, 522)
+science <- c(95, 99, 80, 82, 75, 85, 80, 95, 89, 86)
+english <- c(25, 22, 18, 15, 20, 28, 15, 30, 27, 18)
+
+roster <- data.frame(Student, math, science, english, 
+                     stringsAsFactors=FALSE)
+```
+
+任务是将学生的各种成绩整合为一个指标，然后将前20%的学生评定为A，接下来的20%为B，以此类推，然后按照学生姓名字母顺序给学生排序。
+
+### 5.2 数值和字符处理函数
+本节综述各种数值和字符处理函数。
+#### 5.2.1 数学函数
+常用的数学函数有：
+![数学函数1](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数学函数1.png)
+![数学函数2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数学函数2.png)
+#### 5.2.2 统计函数
+![统计函数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/统计函数.png)  
+
+均值与标准差的计算给出例子。
+```R
+x <- c(1, 2, 3, 4, 5, 6, 7, 8)
+mean(x)
+sd(x)
+n <- length(x)
+meanx <- sum(x)/n
+css <- sum((x - meanx)**2)            
+sdx <- sqrt(css / (n-1))
+meanx
+sdx
+```
+
+#### 5.2.3 概率函数
+![概率函数格式](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/概率函数格式.png)  
+在分布之前分别添加四个字母表示其概率分布的不同函数。  
+![概率分布](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/概率分布.png)  
+作者根据正态分布给出一个案例  
+![正态分布](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/正态分布.png)  
+有些时候，生成的一些随机数，需要保存，此时可以用种子来解决。
+```R
+runif(5)
+runif(5)
+
+set.seed(1234)                                                     
+runif(5)
+set.seed(1234)                                                      
+runif(5)
+```
+在不设定seed时，两次随机产生的数不同，但是当设置后，即可产生相同的随机数。
+
+在此，作者简要介绍了MASS包，方便生成多元正态数据。
+```R
+library(MASS)
+options(digits = 3)
+set.seed(1234)
+
+mean <- c(230.7, 146.7, 3.6)                                           
+sigma <- matrix( c(15360.8, 6721.2, -47.1,                              
+                   6721.2, 4700.9, -16.5,
+                   -47.1,  -16.5,   0.3), nrow=3, ncol=3)
+
+mydata <- mvrnorm(500, mean, sigma)                                     
+mydata <- as.data.frame(mydata)                                         
+names(mydata) <- c("y", "x1", "x2") 
+
+dim(mydata)                                                             
+head(mydata, n=10)
+```
+
+#### 5.2.4 字符处理函数
+![字符处理函数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/字符处理函数.png)  
+
+#### 5.2.5 其它函数
+![其它函数](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/其它函数.png)
+
+介绍了一对函数后，作者给出一些使用的例子。
+
+下面这个主要是说明大部分函数支持批量计算，能够针对向量、矩阵等进行计算
+```R
+a <- 5
+sqrt(a)
+b <- c(1.243, 5.654, 2.99)
+round(b)
+c <- matrix(runif(12), nrow=3)
+c
+log(c)
+mean(c)
+```
+
+在某些时候，我们想要计算的不是全部数据的均值，可能是某行或者某列的均值，此时R提供了apply函数。
+```R
+mydata <- matrix(rnorm(30), nrow=6)
+mydata
+apply(mydata, 1, mean)     
+apply(mydata, 2, mean) 
+apply(mydata, 2, mean, trim=.2) 
+```
+需要特殊说明的有一个，是trim=0.2这一项，叫做截尾，数据中最高20%和最低20%的数据都不会被计算。
+
