@@ -1,4 +1,4 @@
-# R语言实战阅读笔记
+# R语言实战阅读笔记（第一部分）
 [TOC]
 
 阅读这本书然后进行笔记，方便起见参考文献写最前面。  
@@ -714,7 +714,7 @@ from mtcars where cyl in (4, 6) group by gear")
 不展开，睡觉去，有需求再来展开学一波。
 
 ## 5 高级数据管理
-**C5_advancedDataManagement.R**
+**C5_advancedDataManagement.R**  
 快速get各种数学、统计、字符串处理函数，学会编辑函数实现特定功能，并提供数据整合的一些特殊方法。
 
 ### 5.1 一个数据处理的难题
@@ -826,3 +826,198 @@ apply(mydata, 2, mean, trim=.2)
 ```
 需要特殊说明的有一个，是trim=0.2这一项，叫做截尾，数据中最高20%和最低20%的数据都不会被计算。
 
+### 5.3 解决那个5.1的问题
+```R
+# 步骤1
+options(digits=2)
+Student <- c("John Davis", "Angela Williams", "Bullwinkle Moose",
+             "David Jones", "Janice Markhammer", "Cheryl Cushing",
+             "Reuven Ytzrhak", "Greg Knox", "Joel England",
+             "Mary Rayburn")
+Math <- c(502, 600, 412, 358, 495, 512, 410, 625, 573, 522)
+Science <- c(95, 99, 80, 82, 75, 85, 80, 95, 89, 86)
+English <- c(25, 22, 18, 15, 20, 28, 15, 30, 27, 18)
+roster <- data.frame(Student, Math, Science, English,
+                     stringsAsFactors=FALSE)
+# 步骤2
+z <- scale(roster[,2:4])
+
+# 步骤3
+score <- apply(z, 1, mean)
+roster <- cbind(roster, score)
+
+# 步骤4
+y <- quantile(score, c(.8,.6,.4,.2))
+
+# 步骤5
+roster$grade[score >= y[1]] <- "A"
+roster$grade[score < y[1] & score >= y[2]] <- "B"
+roster$grade[score < y[2] & score >= y[3]] <- "C"
+roster$grade[score < y[3] & score >= y[4]] <- "D"
+roster$grade[score < y[4]] <- "F"
+
+# 步骤6
+name <- strsplit((roster$Student), " ")
+
+# 步骤7
+Lastname <- sapply(name, "[", 2)
+Firstname <- sapply(name, "[", 1)
+roster <- cbind(Firstname,Lastname, roster[,-1])
+
+# 步骤8
+roster <- roster[order(Lastname,Firstname),]
+
+# 步骤9
+roster
+```
+
+- 步骤1：确定小数点维数，初始化数据。
+- 步骤2：对数据进行标准化。
+- 步骤3：通过均值得到标准分并合并到数据中。
+- 步骤4：计算学生百分比分位数。
+- 步骤5：为学生分配等级。
+- 步骤6：空格为界为学生分姓名。
+- 步骤7：抽取姓和名信息然后插入到框架中。
+- 步骤8：根据名和姓进行排序。
+- 步骤9：查看最终结果。
+
+### 5.4 控制流
+说白了，这节讲循环和条件。  
+#### 5.4.1 循环
+R里面循环只有for和while
+```R
+# for循环
+for (i in 1:10){
+  print("Hello")
+  print("world")
+}
+
+# while循环
+i<-0
+while(i<10){
+  print("Hello")
+  print("world")
+  print(i)
+  i<-i+1
+}
+```
+
+#### 5.4.2 条件
+条件有3中，if-else，ifelse，switch
+```R
+# if-else
+i<-10
+if(i==10) print("i is 10") else print("i is not 10")
+if(i!=10) print("i is not 10") else print("i is 10")
+
+# ifelse
+i<-10
+ifelse(i==10,print("i is 10"),print("i is not 10"))
+a<-ifelse(i==10,TRUE,FALSE)
+a
+
+# switch
+feelings <- c("sad", "afraid")
+for (i in feelings)
+  print(
+    switch(i,
+           happy  = "I am glad you are happy",
+           afraid = "There is nothing to fear",
+           sad    = "Cheer up",
+           angry  = "Calm down now"
+    )
+  )
+
+```
+
+### 5.5 用户自变函数
+作为编程语言，怎么能没有自编程序？
+```R
+mystats <- function(x, parametric=TRUE, print=FALSE) {
+  if (parametric) {
+    center <- mean(x); spread <- sd(x)
+  } else {
+    center <- median(x); spread <- mad(x)
+  }
+  if (print & parametric) {
+    cat("Mean=", center, "\n", "SD=", spread, "\n")
+  } else if (print & !parametric) {
+    cat("Median=", center, "\n", "MAD=", spread, "\n")
+  }
+  result <- list(center=center, spread=spread)
+  return(result)
+}
+```
+
+然后来试试怎么调用。
+```R
+set.seed(1234)
+x <- rnorm(500) 
+y <- mystats(x)
+y <- mystats(x, parametric=FALSE, print=TRUE)
+```
+
+### 5.6 数据整合与重构
+在计算过程中，所需要的计算参数并非就是原始数据，而是数据的某些统计量或者数据的其他格式，所以在进行计算之前需要对数据进行整合和重构。
+
+#### 5.6.1 转置
+用的就是函数t
+```R
+cars <- mtcars[1:5, 1:4]      
+cars
+t(cars)
+```
+
+#### 5.6.2 整合数据
+有点像excel中的分类汇总，根据某个变量，对数据进行折叠。
+```R
+options(digits=3)
+attach(mtcars)
+aggdata <-aggregate(mtcars, by=list(cyl,gear), 
+                    FUN=mean, na.rm=TRUE)
+aggdata
+```
+
+#### 5.6.3 reshape2包
+据说这是一个很牛逼的包，所以作者介绍了。案例先行，所以还是先给出案例的数据。
+![reshape2包案例数据](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/reshape2包案例数据.png)
+
+在如包（没下的话先用install.packages("reshape2")下载）
+```R
+library(reshape2)
+```
+
+数据代码
+```R
+mydata <- read.table(header=TRUE, sep=" ", text="
+ID Time X1 X2
+1 1 5 6
+1 2 3 5
+2 1 6 1
+2 2 2 4
+")
+```
+
+**数据融合**：
+```R
+# 数据融合
+md <- melt(mydata, id=c("ID", "Time"))
+```
+
+**数据重铸**
+```R
+# reshaping with aggregation
+dcast(md, ID~variable, mean)
+dcast(md, Time~variable, mean)
+dcast(md, ID~Time, mean)
+
+# reshaping without aggregation
+dcast(md, ID+Time~variable)
+dcast(md, ID+variable~Time)
+dcast(md, ID~variable+Time)
+```
+
+其实现的是对数据的中心整合，还是能感叹道其神奇。其运算结果分别如下：
+![数据融合和重铸](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据融合和重铸.png)
+
+第一部分就到此结束，是对R的基本认识和基本了解。
