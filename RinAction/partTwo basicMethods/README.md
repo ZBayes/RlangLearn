@@ -331,3 +331,7 @@ dotchart(x$mpg,
 ```
 
 ![点图2](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/点图2.png)  
+
+## 7 基本统计分析
+**c7 basicStatistics.R**  
+
