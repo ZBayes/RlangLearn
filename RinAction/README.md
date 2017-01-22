@@ -5,4 +5,4 @@
 
 [Part 1 Getting Started](https://github.com/ZBayes/RlangLearn/tree/master/RinAction/partOne%20gettingStarted)（finished）
 
-[Part 2 Basic methods](https://github.com/ZBayes/RlangLearn/tree/master/RinAction/partTwo%20basicMethods)（finished）
+[Part 2 Basic Methods](https://github.com/ZBayes/RlangLearn/tree/master/RinAction/partTwo%20basicMethods)（finished）

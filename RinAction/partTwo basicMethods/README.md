@@ -8,6 +8,11 @@
 **c6 basicGraphs.R**  
 本节主要讲解各种统计图的绘制方法。
 
+```R
+# 需要用到的包
+install.packages(c("vcd", "plotrix", "sm", "vioplot"))
+```
+
 ### 6.1 条形图
 #### 6.1.1 简单条形图
 首先载入数据。
@@ -336,6 +341,11 @@ dotchart(x$mpg,
 **c7 basicStatistics.R**  
 本章会在前面统计分析的基础上了解变量之间的统计关系。需要注意的是，本章的主要内容的学习必须建立在对概率统计有比较好的基础前提下，否则，没用。
 
+```R
+# 需要用到的包
+install.packages(c("ggm", "gmodels", "vcd", "Hmisc","pastecs", "psych", "doBy"))
+```
+
 ### 7.1 描述性统计分析
 数据载入  
 ```R
@@ -624,3 +634,5 @@ source("http://www.statmethods.net/RiA/wmc.txt")
 states <- data.frame(state.region, state.x77)
 wmc(Illiteracy ~ state.region, data=states, method="holm")
 ```
+
+第二部分 完

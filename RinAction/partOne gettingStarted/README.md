@@ -5,9 +5,18 @@
 [1] Robert, I, Kabacoff. [R语言实战](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R语言实战.pdf)[M]. 北京:中国工信出版集团, 人民邮电出版社, 2016.  
 [2] 刘重杰. [R数据的导入与导出](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf)[EB/OL]. https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R数据的导入与导出.pdf.  
 
+
 ## 2 创建数据集
 **C2_createDateSet.R**
 数据的创建、导入和整理等。
+
+```R
+# 需要用到的包
+# 无
+# 第一章存在一个以后会用的包
+install.packages("vcd")
+```
+
 ### 2.2 数据结构
 一般而言，数据的存储结构有下面几种形式：
 ![数据存储结构](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据存储结构.png)  
@@ -162,6 +171,12 @@ patientdata&gender<-factor(patientdata$gender,levels = c(1,2),labels = c("male",
 ## 3 图形初阶
 **C3_basicGraphics.R**  
 图形创建与处理基础。
+
+```R
+# 需要用到的包
+install.packages(c("Hmisc", "RColorBrewer"))
+```
+
 
 ### 3.1 使用图形
 首先给出这个例子：
@@ -443,6 +458,12 @@ par(opar)
 ## 4 基本数据管理
 **C4_basicDataManagement.R**  
 本章主要讲解基本的数据管理和预处理技巧。
+
+```R
+# 需要用到的包
+install.packages(c('reshape2', 'sqldf'))
+```
+
 ### 4.1 案例
 书中研究的是性别等因素对领导行为的影响，数据表如下：  
 ![性别领导行为案例数据](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/性别领导行为案例数据.png)  
@@ -716,6 +737,11 @@ from mtcars where cyl in (4, 6) group by gear")
 ## 5 高级数据管理
 **C5_advancedDataManagement.R**  
 快速get各种数学、统计、字符串处理函数，学会编辑函数实现特定功能，并提供数据整合的一些特殊方法。
+
+```R
+# 需要用到的包
+install.packages("reshape2")
+```
 
 ### 5.1 一个数据处理的难题
 本章只提出一个问题，首先是给出学生数据表。
@@ -1021,3 +1047,5 @@ dcast(md, ID~variable+Time)
 ![数据融合和重铸](https://raw.githubusercontent.com/ZBayes/RlangLearn/master/RinAction/pic_temp/数据融合和重铸.png)
 
 第一部分就到此结束，是对R的基本认识和基本了解。
+
+第一部分 完
