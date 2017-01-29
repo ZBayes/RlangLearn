@@ -38,3 +38,6 @@ Here r some notes taken when I m learning R Language.
 - 新增：R语言实战笔记RinAction，每章需要用到的包  
 参考文献：  
 [1] Robert, I, Kabacoff. [R语言实战](https://github.com/ZBayes/RlangLearn/blob/master/RinAction/R语言实战.pdf)[M]. 北京:中国工信出版集团, 人民邮电出版社, 2016.  
+
+2017-1-29
+- 新增：R语言实战笔记RinAction，完整版，ALL.md
